@@ -6,3 +6,40 @@ table, thead, tr, th, td{
 tr td:last-child, tr td:nth-last-child(3){
     background-color: lightblue;
 }
+
+#gyakorlas {
+    background-color: lightpink;
+    color: darkmagenta;
+}
+
+#gyakorlas button:has(+p){
+    background-color: khaki;
+}
+
+#gyakorlas button:not(:has(+p)){
+    background-color: darksalmon;
+}
+
+#gyakorlas:has(+a:hover) button{
+    background-color: aquamarine;
+}
+
+tr:not(:has(td[rowspan]))+tr:not(:has(td[rowspan])):hover td{
+    background-color: bisque;
+}
+
+tr:has(td[rowspan]):hover td{
+    background-color: coral;
+}
+
+tr:has(td[rowspan]):hover + tr td{
+    background-color: coral;
+}
+
+tr:has(td[rowspan]):has(+tr:hover) td{
+    background-color: coral;
+}
+
+tr:has(td[rowspan]):has(+tr:hover) + tr td{
+    background-color: coral;
+}
