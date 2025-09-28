@@ -1,0 +1,38 @@
+table, thead, tr, th, td{
+    border: 2px, solid, black;
+    border-collapse: collapse;
+}
+
+tr td:last-child, tr td:nth-last-child(3){
+    background-color: rgb(129, 62, 100);
+}
+
+tr:not(:has(td[rowspan]))+tr:not(:has(td[rowspan])):hover td{
+    font-weight: bold;
+    color: rgb(247, 32, 32);
+    background-color: black;
+}
+
+tr:has(td[rowspan]):hover td{
+    font-weight: bold;
+    color: rgb(247, 32, 32);
+    background-color: black;
+}
+
+tr:has(td[rowspan]):hover + tr td{
+    font-weight: bold;
+    color: rgb(247, 32, 32);
+    background-color: black;
+}
+
+tr:has(td[rowspan]):has(+tr:hover) td{
+    font-weight: bold;
+    color: rgb(247, 32, 32);
+    background-color: black;
+}
+
+tr:has(td[rowspan]):has(+tr:hover) + tr td{
+    font-weight: bold;
+    color: rgb(247, 32, 32);
+    background-color: black;
+}
