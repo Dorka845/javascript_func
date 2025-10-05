@@ -31,6 +31,7 @@ const table = document.createElement('table'); //létrehoz html elemet a memóri
 document.body.appendChild(table); //hozzáfűz egy html elemet valamihez
 //table.appendChild() <- berakja hozzá
 
+
 const thead = document.createElement('thead');
 table.appendChild(thead);
 
@@ -47,24 +48,36 @@ tr.appendChild(th2);
 
 const th3 = document.createElement('th');
 th3.innerText = "Képviselők";
-th3.colSpan=2
+th3.colSpan = 2
 tr.appendChild(th3);
+
 
 const tbody = document.createElement('tbody');
 table.appendChild(tbody);
 
-const tr1 = document.createElement('tr');
-tbody.appendChild(tr1);
+for (const a of arr) {
+    const tr = document.createElement('tr');
+    tbody.appendChild(tr);
 
-const tr1_td1 = document.createElement('td');
-tr1_td1.innerText = a.theme, a.time, a.scientist1;
-tr1.appendChild(tr1_td1);
-const tr1_td2 = document.createElement('td');
-tr1_td2.innerText = a.theme, a.time, a.scientist1;
-tr1.appendChild(tr1_td2);
-const tr1_td3 = document.createElement('td');
-tr1_td3.innerText = a.theme, a.time, a.scientist1;
-tr1.appendChild(tr1_td3);
+    const tr_td1 = document.createElement('td');
+    tr_td1.innerText = a.theme;
+    tr.appendChild(tr_td1);
 
+    const tr_td2 = document.createElement('td');
+    tr_td2.innerText = a.time;
+    tr.appendChild(tr_td2);
 
+    const tr_td3 = document.createElement('td');
+    tr_td3.innerText = a.scientist1;
+    tr.appendChild(tr_td3);
+
+    if(a.scientist2 == undefined) {
+        tr_td3.colSpan = 2
+    }
+    else {
+        const tr_td4 = document.createElement('td')
+        tr_td4.innerText = a.scientist2;
+        tr.appendChild(tr_td4)
+    }
+}
 
