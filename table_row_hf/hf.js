@@ -71,11 +71,11 @@ for(let a of arr) {
         tbody.appendChild(tr3);
 
         const tr3_td2 = document.createElement('td');
-        tr3_td2.innerText = a.author2;
+        tr3_td2.innerText = a.opposingparties2;
         tr3.appendChild(tr3_td2);
 
         const tr3_td3 = document.createElement('td');
-        tr3_td3.innerText = a.literarypiece2;
+        tr3_td3.innerText = a.army2;
         tr3.appendChild(tr3_td3);
 
         tr2_td1.rowSpan = 2;
