@@ -80,3 +80,16 @@ for (const a of arr) {
     }
 }
 
+/**
+ * 
+ * @param {string} celltype 
+ * @param {string} cellcontent 
+ * @param {HTMLTableRowElement} cellrow  //HTMLElement is jó
+ */
+function createElement(celltype, cellcontent, cellrow) {
+    const cell = document.createElement(celltype);
+    cell.innertext = cellcontent;
+    cellrow.appendChild(cell);
+
+}
+createElement();
