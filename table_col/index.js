@@ -1,95 +1,76 @@
+
 /**
- * @type {{writer:string, time:string, lover:string, otherlover?:string}[]}
- */
+* @type {{name:string, time:string, love1:string, love2?:string}[]}
+*/
+
 const arr = [
     {
-        writer: 'Balassi Bálint',
-        time: 'reformáció',
-        lover: 'Losonczy Anna',
-        otherlover: 'Dobó Krisztina',
+        name: `Balassi Bálint`,
+        time: `reformáció`,
+        love1: `Losonczy Anna`,
+        love2: `Dobó Krisztina`
     },
     {
-        writer: 'Csokonai Vitéz Mihály',
-        time: 'felvilágosodás',
-        lover: 'Vajda Juliána',
+        name: `Csokonai Vitéz Mihály`,
+        time: `felvilágosodás`,
+        love1: `Vajda Juliána`
     },
     {
-        writer: 'Petőfi Sándor',
-        time: 'magyar romantika',
-        lover: 'Mednyánszky Berta',
-        otherlover: 'Szendrey Júlia',
+        name: `Petőfi Sándor`,
+        time: `magyar romantika`,
+        love1: `Mednyanszky Berta`,
+        love2: `Szendrey Júlia`
     },
     {
-        writer: 'Ady Endre',
-        time: '20. század',
-        lover: 'Léda',
-        otherlover: 'Csinszka',
+        name: `Ady Endre`,
+        time: `20. század`,
+        love1: `Léda`,
+        love2: `Csinszka`
     }
 ]
 
 const table = document.createElement('table');
 document.body.appendChild(table);
 
-//thead, th-k
 const thead = document.createElement('thead');
 table.appendChild(thead);
 
-const tr = document.createElement('tr');
-thead.appendChild(tr);
+const tr1 = document.createElement('tr');
+thead.appendChild(tr1);
 
-const th1 = document.createElement('th');
-th1.innerText = 'Szerző neve';
-tr.appendChild(th1);
+createCellElement("th", "Szerző neve", tr1);
+createCellElement("th", "Korszak", tr1);
+const th3 = createCellElement("th", "Szerelmek", tr1);
+th3.colSpan = 2;
 
-const th2 = document.createElement('th');
-th2.innerText = 'Korszak';
-tr.appendChild(th2);
-
-const th3 = document.createElement('th');
-th3.innerText = 'Szerelmek';
-th3.colSpan = 2
-tr.appendChild(th3);
-
-//tbody, td-k
 const tbody = document.createElement('tbody');
 table.appendChild(tbody);
 
-for (const a of arr) {
-    const tr = document.createElement('tr');
-    tbody.appendChild(tr);
+for (const ar of arr) {
+    const tr2 = document.createElement('tr');
+    tbody.appendChild(tr2);
 
-    const tr_td1 = document.createElement('td');
-    tr_td1.innerText = a.writer;
-    tr.appendChild(tr_td1);
-
-    const tr_td2 = document.createElement('td');
-    tr_td2.innerText = a.time;
-    tr.appendChild(tr_td2);
-
-    const tr_td3 = document.createElement('td');
-    tr_td3.innerText = a.lover;
-    tr.appendChild(tr_td3);
-
-    if(a.otherlover == undefined) {
-        tr_td3.colSpan = 2
-    }
-    else {
-        const tr_td4 = document.createElement('td')
-        tr_td4.innerText = a.otherlover;
-        tr.appendChild(tr_td4)
+    createCellElement("td", ar.name, tr2);
+    createCellElement("td", ar.time, tr2);
+    const td3 = createCellElement("td", ar.love1, tr2);
+    
+    if(ar.love2) {
+        createCellElement("td", ar.love2, tr2);
+    }else {
+        td3.colSpan = 2;
     }
 }
 
 /**
- * 
- * @param {string} celltype 
- * @param {string} cellcontent 
- * @param {HTMLTableRowElement} cellrow  //HTMLElement is jó
- */
-function createElement(celltype, cellcontent, cellrow) {
-    const cell = document.createElement(celltype);
-    cell.innertext = cellcontent;
-    cellrow.appendChild(cell);
-
+* létrehoz egy táblázatcella elemet és hozzáfűzi egy sorhoz
+* @param {string} cellType - cella típusa: th/td
+* @param {string} cellContent - a cella szövege
+* @param {HTMLTableRowElement} cellRow - ehhez a sorhoz fogja hozzáadni
+* @returns {HTMLTableCellElement} - td
+*/
+function createCellElement(cellType, cellContent, cellRow) {
+    const cell = document.createElement(cellType);
+    cell.innerText = cellContent;
+    cellRow.appendChild(cell);
+    return cell;
 }
-createElement();
