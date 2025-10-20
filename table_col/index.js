@@ -90,3 +90,52 @@ function createCellElement(cellType, cellContent, cellRow) {
 //A függvény törzsében létrehozunk egy html elemet az első paraméter alapján, majd beállítjuk a html elem "a" szövegének a második paraméter értékét, végül a 3. paraméter-hez hozzáfűzzük az itt létrehozott elemet.
 
 //Házi feladat
+//form létrehozása
+const form = document.createElement('form'); //<form> elem létrehozása
+form.id = 'form_js'; //id beállítása
+document.body.appendChild(form); //hozzáfűzés a dokumentum törzséhez
+
+//h2 elem létrehozása
+const h2 = document.createElement('h2'); //<h2> elem létrehozása
+h2.innerText = 'Javascript űrlap'; //innerText beállítása
+form.appendChild(h2); //hozzáfűzés a form-hoz
+
+//segédfüggvény
+/**
+ * @param {string} labelText - label szövege
+ * @param {string} inputType - input típusa (pl. text)
+ * @param {string} inputId - input id-ja
+ * @param {HTMLElement} forms - amihez hozzáadjuk
+ */
+function createInputField(labelText, inputType, inputId, forms) {
+    const label = document.createElement('label'); //<label> elem létrehozása
+    label.htmlFor = inputId; //label for attribútuma az input id-járe mutat
+    label.innerText = labelText; //label szövegének beállítása
+    forms.appendChild(label); //label hozzáadása a form-hoz
+
+    const br1 = document.createElement('br'); //<br> elem létrehozása
+    forms.appendChild(br1); //1. sortörés beszúrása
+
+    const input = document.createElement('input'); //<input> mező létrehozása
+    input.type = inputType; //input típusának beállítása (text)
+    input.id = inputId; //input id-jának beállítása (id)
+    input.name = inputId; //input id-jának beállírása (name)
+    forms.appendChild(input); //input hozzáadása form-hoz
+
+    const br2 = document.createElement('br');
+    forms.appendChild(br2); //2. sortörés beszúrása
+
+    const br3 = document.createElement('br');
+    forms.appendChild(br3); //3. sortörés beszúrása
+}
+
+//input mezők létrehozása segédfüggvénnyel
+createInputField('Költő neve:', 'text', 'kolto_nev', form); //elso input
+createInputField('Korszak:', 'text', 'korszak', form); //második input
+createInputField('Szerelme:', 'text', 'szerelem1', form); //harmadik input
+createInputField('Szerelme:', 'text', 'szerelem2', form); //negyedik input
+
+//gomb létrehozása
+const button = document.createElement('button'); //<button> elem létrehozása
+button.innerText = 'Hozzáadás'; //gomb felirata
+form.appendChild(button); //gomb hozzáadása a form-hoz
