@@ -46,16 +46,16 @@ th3.colSpan = 2;
 const tbody = document.createElement('tbody');
 table.appendChild(tbody);
 
-for (const ar of arr) {
+for (const a of arr) {
     const tr2 = document.createElement('tr');
     tbody.appendChild(tr2);
 
-    createCellElement("td", ar.name, tr2);
-    createCellElement("td", ar.time, tr2);
-    const td3 = createCellElement("td", ar.love1, tr2);
+    createCellElement("td", a.name, tr2);
+    createCellElement("td", a.time, tr2);
+    const td3 = createCellElement("td", a.love1, tr2);
     
-    if(ar.love2) {
-        createCellElement("td", ar.love2, tr2);
+    if(a.love2) {
+        createCellElement("td", a.love2, tr2);
     }else {
         td3.colSpan = 2;
     }
