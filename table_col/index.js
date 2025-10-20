@@ -88,3 +88,5 @@ function createCellElement(cellType, cellContent, cellRow) {
     return cell; //visszaadjuk a cellát, hogy később hivatkozhassunk rá
 }
 //A függvény törzsében létrehozunk egy html elemet az első paraméter alapján, majd beállítjuk a html elem "a" szövegének a második paraméter értékét, végül a 3. paraméter-hez hozzáfűzzük az itt létrehozott elemet.
+
+//Házi feladat
