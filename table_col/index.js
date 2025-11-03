@@ -97,7 +97,7 @@ document.body.appendChild(form); //hozzáfűzés a dokumentum törzséhez
 
 //h2 elem létrehozása
 const h2 = document.createElement('h2'); //<h2> elem létrehozása
-h2.innerText = 'Javascript űrlap'; //innerText beállítása
+h2.innerText = 'Javascript form'; //innerText beállítása
 form.appendChild(h2); //hozzáfűzés a form-hoz
 
 //segédfüggvény
