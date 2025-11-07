@@ -43,3 +43,9 @@ tr:has(td[rowspan]):has(+tr:hover) td{
 tr:has(td[rowspan]):has(+tr:hover) + tr td{
     background-color: coral;
 }
+
+
+/*2025_11_07*/
+.marked {
+    color: red;
+}

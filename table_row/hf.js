@@ -53,6 +53,13 @@ for(let a of arr) {
     tbody.appendChild(tr2);
 
     const tr2_td1 = document.createElement('td');
+    tr2_td1.addEventListener("click",function(e){
+        /**
+         * @type {HTMLTableCellElement}
+         */
+        const valtozo = e.target;
+        valtozo.classList.add("marked");
+    });
     tr2_td1.innerText = a.nationality;
     tr2.appendChild(tr2_td1);
 
@@ -79,3 +86,4 @@ for(let a of arr) {
         tr2_td1.rowSpan = 2;
     }
 }
+
