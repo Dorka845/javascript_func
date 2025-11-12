@@ -261,7 +261,7 @@ form.addEventListener("submit", function(e){
     obj2.author1 = szerzo1value;
     obj2.literarypiece1 = mu1value;
 
-    if (obj2.author2 && obj2.literarypiece2) {
+    if (szerzo2value && mu2value) {
         obj2.author2 = szerzo2value;
         obj2.literarypiece2 = mu2value;
     }
