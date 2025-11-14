@@ -1,5 +1,10 @@
 /**
- * @type {{nationality:string, author1:string, author2?:string, literarypiece1:string, literarypiece2?:string}[]}
+ * @typedef {{nationality:string, author1:string, author2?:string, literarypiece1:string, literarypiece2?:string}} CountryWriters
+ */
+
+
+/**
+ * @type {CountryWriters[]}
  */
 
 const arr = [
@@ -32,81 +37,21 @@ const arr = [
 const table = document.createElement('table');
 document.body.appendChild(table);
 
-const thead = document.createElement('thead');
-table.appendChild(thead);
-
-const tr1 = document.createElement('tr');
-thead.appendChild(tr1);
-
 const a = ['Nemzetiség', 'Szerző', 'Mű'];
-for(let i of a) {
-    const th = document.createElement('th');
-    tr1.appendChild(th);
-    th.innerText = i;
-}
+generateHeader(table, a);
 
 const tbody = document.createElement('tbody');
 tbody.id = 'tablebody';
 table.appendChild(tbody);
 
-/**
- * @param {{nationality:string, author1:string, author2?:string, literarypiece1:string, literarypiece2?:string}[]}
- */
-function renderTableBody(array) {
-    const tablebody = document.getElementById('tablebody');
-    tablebody.innerHTML = "";
 
-    for(let a of array) {
-    const tr2 = document.createElement('tr');
-    tbody.appendChild(tr2);
 
-    const tr2_td1 = document.createElement('td');
-    tr2_td1.addEventListener("click",function(e){
-        /**
-         * @type {HTMLTableCellElement}
-         */
-        const valtozo = e.target;
 
-        const tr = valtozo.parentElement;
-        const tbody = tr.parentElement;
-        const alrmarked = tbody.querySelector('.marked');
-
-        if (alrmarked !== null) {
-            alrmarked.classList.remove('marked');
-        }
-
-        valtozo.classList.add("marked");
-    });
-    tr2_td1.innerText = a.nationality;
-    tr2.appendChild(tr2_td1);
-
-    const tr2_td2 = document.createElement('td');
-    tr2_td2.innerText = a.author1;
-    tr2.appendChild(tr2_td2);
-
-    const tr2_td3 = document.createElement('td');
-    tr2_td3.innerText = a.literarypiece1;
-    tr2.appendChild(tr2_td3);
-
-    if (a.author2 != undefined && a.literarypiece2 != undefined) {
-        const tr3 = document.createElement('tr');
-        tablebody.appendChild(tr3);
-
-        const tr3_td2 = document.createElement('td');
-        tr3_td2.innerText = a.author2;
-        tr3.appendChild(tr3_td2);
-
-        const tr3_td3 = document.createElement('td');
-        tr3_td3.innerText = a.literarypiece2;
-        tr3.appendChild(tr3_td3);
-
-        tr2_td1.rowSpan = 2;
-    }
+function htmlFormEventListener(e) {
+    
 }
-}
-renderTableBody(arr);
 
-
+//htmlform
 const formElement = document.getElementById("htmlform");
 formElement.addEventListener("submit", function(e){
     //alapértelmezett működés egy get-et küld
@@ -142,7 +87,7 @@ formElement.addEventListener("submit", function(e){
     const mu2value = mu2.value;
 
     /** 
-     * @type {{nationality:string, author1:string, author2?:string, literarypiece1:string, literarypiece2?:string}} 
+     * @type {CountryWriters[]} 
      */
     const obj = {}
     obj.nationality = nemzetisegvalue;
@@ -184,31 +129,8 @@ formElement.addEventListener("submit", function(e){
     }
 })
 
-//segédfüggvény
-/**
- * @param {string} labelText - label szövege
- * @param {string} inputId - input id-ja
- * @param {HTMLElement} forms - amihez hozzáadjuk
- */
-function createFormElement(forms, id, labelContent) {
-    const label = document.createElement('label');
-    label.htmlFor = id;
-    label.innerText = labelContent;
-    forms.appendChild(label);
 
-    const br1 = document.createElement('br');
-    forms.appendChild(br1);
 
-    const input = document.createElement('input');
-    input.id = id;
-    forms.appendChild(input);
-
-    const br2 = document.createElement('br');
-    forms.appendChild(br2);
-
-    const br3 = document.createElement('br');
-    forms.appendChild(br3);
-}
 
 const form = document.createElement('form');
 form.id = 'htmlform';
@@ -254,7 +176,7 @@ form.addEventListener("submit", function(e){
     const mu2value = mu2.value;
 
     /** 
-     * @type {{nationality:string, author1:string, author2?:string, literarypiece1:string, literarypiece2?:string}} 
+     * @type {CountryWriters[]} 
      */
     const obj2 = {}
     obj2.nationality = nemzetisegvalue;
@@ -273,3 +195,5 @@ form.addEventListener("submit", function(e){
 const button = document.createElement('button');
 button.innerText = 'Hozzáadás';
 form.appendChild(button);
+
+
