@@ -175,6 +175,7 @@ form.addEventListener("submit", function(e){
     /** @type {string} */
     const mu2value = mu2.value;
 
+        
     /** 
      * @type {CountryWriters[]} 
      */

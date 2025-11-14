@@ -104,21 +104,43 @@ renderTableBody(arr);
  * @param {HTMLElement} forms - amihez hozzáadjuk
  */
 function createFormElement(forms, id, labelContent) {
+    const div = document.createElement('div');
+    forms.appendChild(div);
+
     const label = document.createElement('label');
     label.htmlFor = id;
     label.innerText = labelContent;
-    forms.appendChild(label);
+    div.appendChild(label);
 
     const br1 = document.createElement('br');
     forms.appendChild(br1);
 
     const input = document.createElement('input');
     input.id = id;
-    forms.appendChild(input);
+    div.appendChild(input);
 
     const br2 = document.createElement('br');
     forms.appendChild(br2);
 
     const br3 = document.createElement('br');
     forms.appendChild(br3);
+
+    const span = document.createElement('span');
+    classList.add
+    div.appendChild(span);
+}
+
+/**
+ * 
+ * @param {HTMLInputElement} inputField1 
+ * @param {HTMLInputElement} inputField2 
+ * @param {HTMLInputElement} inputField3 
+ */
+function validateFields(inputField1, inputField2, inputField3) {
+    const valid = true;
+    if (inputField1.value == "") {
+        valid = false;
+    }
+
+    return valid;
 }
