@@ -4,9 +4,50 @@
 
 
 /**
+ * Táblázat létrehozás
+ * 
+ * @param {string[]} headerList - fejléc feliratai
+ * @param {string} tbodyId - tbody id-ja
+ * @returns {HTMLTableElement} - a létrehozott táblázat
+ */
+function generateTable(headerList, tbodyId) {
+    const table = document.createElement("table");
+
+    generateHeader(table, headerList); //fejléc létrehozása meglévő függvénnyel
+
+    //tbody létrehozása
+    const tbody = document.createElement('tbody');
+    tbody.id = tbodyId;
+    table.appendChild(tbody);
+
+    document.body.appendChild(table);
+
+    return table;
+}
+
+/**
+ * Fejléc létrehozása
+ * 
+ * @param {HTMLTableElement} table 
+ * @param {string[]} headerList - a content amik a táblázat soraiba mennek annak a változója
+ */
+function generateHeader(table, headerList){
+    const thead = document.createElement('thead');
+    table.appendChild(thead);
+
+    const tr = document.createElement('tr');
+    thead.appendChild(tr);
+
+    for (let i of headerList){
+        createCell('th', i, tr)
+    }
+    return thead;
+}
+
+/**
  * tbody létrehozás
  * 
- * @param {{nationality:string, author1:string, author2?:string, literarypiece1:string, literarypiece2?:string}[]}
+ * @param {CountryWriters[]} array
  */
 function renderTableBody(array) {
     const tablebody = document.getElementById('tablebody');
@@ -18,38 +59,10 @@ function renderTableBody(array) {
 }
 
 /**
- * Form elementek létrehozás
- * 
- * @param {HTMLElement} forms - amihez hozzáadjuk
- * @param {string} id - input id-ja
- * @param {string} labelContent - label szövege
- */
-function createFormElement(forms, id, labelContent) {
-    const div = document.createElement('div');
-    forms.appendChild(div);
-
-    const label = document.createElement('label');
-    label.htmlFor = id;
-    label.innerText = labelContent;
-    div.appendChild(label);
-    
-    const br1 = document.createElement('br');
-    forms.appendChild(br1);
-    
-    const input = document.createElement('input');
-    input.id = id;
-    div.appendChild(input);
-    
-    const span = document.createElement('span');
-    span.classList.add("error");
-    div.appendChild(span);
-}
-
-/**
- * Táblázatsorok
+ * Táblázatsorok létrehozása
  * 
  * @param {HTMLTableSectionElement} tablebody 
- * @param {CountryWriters[]} CountryWriters 
+ * @param {CountryWriters} CountryWriters 
  */
 function renderTableRow(tablebody, CountryWriters) {
     const tr2 = document.createElement('tr');
@@ -103,22 +116,59 @@ function createCell(cellType, cellContent, parentRow) {
 }
 
 /**
- * Header létrehozása
+ * Form elementek létrehozása
  * 
- * @param {HTMLTableElement} table 
- * @param {string[]} headerList - a content amik a táblázat soraiba mennek annak a változója
+ * @param {HTMLElement} forms - amihez hozzáadjuk
+ * @param {string} id - input id-ja
+ * @param {string} labelContent - label szövege
  */
-function generateHeader(table, headerList){
-    const thead = document.createElement('thead');
-    table.appendChild(thead);
+function createFormElement(forms, id, labelContent) {
+    const div = document.createElement('div');
+    forms.appendChild(div);
 
-    const tr = document.createElement('tr');
-    thead.appendChild(tr);
+    const label = document.createElement('label');
+    label.htmlFor = id;
+    label.innerText = labelContent;
+    div.appendChild(label);
+    
+    const br1 = document.createElement('br');
+    div.appendChild(br1);
+    
+    const input = document.createElement('input');
+    input.id = id;
+    div.appendChild(input);
 
-    for (let i of headerList){
-        createCell('th', i, tr)
+    const br2 = document.createElement('br');
+    div.appendChild(br2);
+
+    const br3 = document.createElement('br');
+    div.appendChild(br3);
+    
+    const span = document.createElement('span');
+    span.classList.add("error");
+    div.appendChild(span);
+}
+
+/**
+ * Form létrehozása
+ * 
+ * @param {string} id - a form id-ja
+ * @param {FormField[]} elements - label-input párok adatai
+ * @returns {HTMLFormElement}
+ */
+function generateForm(id, elements) {
+    const form = document.createElement('form');
+    form.id = id
+
+    for (let elem of elements) {
+        createFormElement(form, elem.id, elem.label)
     }
-    return thead;
+
+    const button = document.createElement('button');
+    button.innerText = 'Hozzáadás';
+    form.appendChild(button);
+
+    return form;
 }
 
 /**
@@ -157,10 +207,14 @@ function HTMLFormEventListener(e) {
     /** @type {string} */
     const mu2value = mu2.value;
 
+    if(!validateFields(nemzetiseg, szerzo1, mu1)) {
+        return;
+    }
+
     /** 
-     * @type {CountryWriters[]} 
+     * @type {CountryWriters} 
      */
-    const tomb = {}
+    const tomb = {};
 
     tomb.nationality = nemzetisegvalue;
     tomb.author1 = szerzo1value;
@@ -176,19 +230,50 @@ function HTMLFormEventListener(e) {
 }
 
 /**
+ * Validálás
+ * 
+ * @param {HTMLInputElement} inputField 
+ * @param {string} errorMsg 
+ * @returns {boolean}
+ */
+function validateField(inputField, errorMsg) {
+    let valid = true;
+
+    if (inputField.value === "") {
+        const parentDiv = inputField.parentElement;
+        const error = parentDiv.querySelector(".error");
+        error.innerText = errorMsg;
+        valid = false;
+    }
+    return valid;
+}
+
+/**
+ * Validálás
  * 
  * @param {HTMLInputElement} inputField1 
  * @param {HTMLInputElement} inputField2 
  * @param {HTMLInputElement} inputField3 
  */
 function validateFields(inputField1, inputField2, inputField3) {
-    let valid = true;
-    if (inputField1.value == "") {
-        const parentDiv = inputField1.parentElement;
-        const a = parentDiv.querySelector(".error");
-        a.innerText = "Mező kitöltése kötelező!";
+    const form = inputField1.form;
+    const error = form.querySelectorAll('.error');
+    for (const i of error) {
+        i.innerText = "";
+    } //hibaüzenetek törlése
 
+    let valid = true;
+    if (!validateField(inputField1, "Mező kitöltése kötelező!")) {
         valid = false;
     }
+
+    if (!validateField(inputField2, "Mező kitöltése kötelező!")) {
+        valid = false;
+    }
+
+    if (!validateField(inputField3, "Mező kitöltése kötelező!")) {
+        valid = false;
+    }
+
     return valid;
 }
