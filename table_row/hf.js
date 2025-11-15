@@ -44,105 +44,23 @@ const tbody = document.createElement('tbody');
 tbody.id = 'tablebody';
 table.appendChild(tbody);
 
+renderTableBody(arr);
 
+const formHTML = document.getElementById("htmlform"); //form változóban tárolása
+formHTML.addEventListener('submit', HTMLFormEventListener); //nameless function kicserélhető a lent definiált függvényre (erre változóként hivatkozunk)
 
+//Form létrehozása JS-ben
+const formJS = document.createElement('form');
+document.body.appendChild(formJS);
 
-function htmlFormEventListener(e) {
-    
-}
+//Form feltöltése
+createFormElement(formJS, 'nemzetiseg', 'Nemzetiség:');
+createFormElement(formJS, 'szerzo1', 'Szerző:');
+createFormElement(formJS, 'mu1', 'Mű:');
+createFormElement(formJS, 'szerzo2', 'Másik Szerző:');
+createFormElement(formJS, 'mu2', 'Mű:');
 
-//htmlform
-const formElement = document.getElementById("htmlform");
-formElement.addEventListener("submit", function(e){
-    //alapértelmezett működés egy get-et küld
-    e.preventDefault(); //alapértelmezett működést gátolja
-    /**
-     * @type {HTMLFormElement}
-     */
-    const event = e.target;
-
-    /** @type {HTMLInputElement} */
-    const nemzetiseg = event.querySelector("#nemzetiseg");
-    /** @type {string} */
-    const nemzetisegvalue = nemzetiseg.value;
-
-    /** @type {HTMLInputElement} */
-    const szerzo1 = event.querySelector("#szerzo1");
-    /** @type {string} */
-    const szerzo1value = szerzo1.value;
-
-    /** @type {HTMLInputElement} */
-    const szerzo2 = event.querySelector("#szerzo2");
-    /** @type {string} */
-    const szerzo2value = szerzo2.value;
-
-    /** @type {HTMLInputElement}*/
-    const mu1 = event.querySelector("#mu1");
-    /** @type {string} */
-    const mu1value = mu1.value;
-
-    /** @type {HTMLInputElement} */
-    const mu2 = event.querySelector("#mu2");
-    /** @type {string} */
-    const mu2value = mu2.value;
-
-    /** 
-     * @type {CountryWriters[]} 
-     */
-    const obj = {}
-    obj.nationality = nemzetisegvalue;
-    obj.author1 = szerzo1value;
-    obj.author2 = szerzo2value;
-    obj.literarypiece1 = mu1value;
-    obj.literarypiece2 = mu2value;
-
-    const tbody = document.getElementById("tablebody1");
-
-    const tr2 = document.createElement('tr');
-    tbody.appendChild(tr2);
-
-    const tr2_td1 = document.createElement('td');
-    tr2_td1.innerText = obj.nationality;
-    tr2.appendChild(tr2_td1);
-
-    const tr2_td2 = document.createElement('td');
-    tr2_td2.innerText = obj.author1;
-    tr2.appendChild(tr2_td2);
-
-    const tr2_td3 = document.createElement('td');
-    tr2_td3.innerText = obj.literarypiece1;
-    tr2.appendChild(tr2_td3);
-
-    if (obj.author2 && obj.literarypiece2) {
-        const tr3 = document.createElement('tr');
-        tbody.appendChild(tr3);
-
-        const tr3_td2 = document.createElement('td');
-        tr3_td2.innerText = obj.author2; 
-        tr3.appendChild(tr3_td2);
-
-        const tr3_td3 = document.createElement('td');
-        tr3_td3.innerText = obj.literarypiece2;
-        tr3.appendChild(tr3_td3);
-
-        tr2_td1.rowSpan = 2;
-    }
-})
-
-
-
-
-const form = document.createElement('form');
-form.id = 'htmlform';
-document.body.appendChild(form);
-
-createFormElement(form, 'nemzetiseg', 'Nemzetiség:');
-createFormElement(form, 'szerzo1', 'Szerző:');
-createFormElement(form, 'mu1', 'Mű:');
-createFormElement(form, 'szerzo2', 'Másik Szerző:');
-createFormElement(form, 'mu2', 'Mű:');
-
-form.addEventListener("submit", function(e){
+formJS.addEventListener("submit", function(e){
     //alapértelmezett működés egy get-et küld
     e.preventDefault(); //alapértelmezett működést gátolja
     /**
@@ -177,24 +95,29 @@ form.addEventListener("submit", function(e){
 
         
     /** 
-     * @type {CountryWriters[]} 
+     * @type {CountryWriters} 
      */
-    const obj2 = {}
-    obj2.nationality = nemzetisegvalue;
-    obj2.author1 = szerzo1value;
-    obj2.literarypiece1 = mu1value;
+    const obj = {}; //object létrehozása
 
-    if (szerzo2value && mu2value) {
-        obj2.author2 = szerzo2value;
-        obj2.literarypiece2 = mu2value;
+    if (validateFields(nemzetiseg, szerzo1, mu1)){
+
     }
 
-    arr.push(obj2);
-    renderTableBody(arr);
+    obj.nationality = nemzetisegvalue; //object tulajdonságait megfeleltetjük az input értékkel
+    obj.author1 = szerzo1value;
+    obj.literarypiece1 = mu1value;
+
+    if (szerzo2value && mu2value) {
+        obj.author2 = szerzo2value;
+        obj.literarypiece2 = mu2value;
+    }
+
+    arr.push(obj); //hozzáadjuk az objektumot az arrayhez
+    renderTableBody(arr); //meghívjuk rá a renderTableBody-t a tömbbel
 })
 
+//Gomb létrehozása és hozzáadása
 const button = document.createElement('button');
 button.innerText = 'Hozzáadás';
-form.appendChild(button);
-
+formJS.appendChild(button);
 
