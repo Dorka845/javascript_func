@@ -13,13 +13,15 @@
 function generateTable(headerList, tbodyId) {
     const table = document.createElement("table");
 
-    generateHeader(table, headerList); //fejléc létrehozása meglévő függvénnyel
+    //Fejléc létrehozása meglévő függvénnyel
+    generateHeader(table, headerList); 
 
     //tbody létrehozása
     const tbody = document.createElement('tbody');
     tbody.id = tbodyId;
     table.appendChild(tbody);
 
+    //Táblázat hozzáadása
     document.body.appendChild(table);
 
     return table;
@@ -38,6 +40,7 @@ function generateHeader(table, headerList){
     const tr = document.createElement('tr');
     thead.appendChild(tr);
 
+    //Minden fejléc szöveghez készít egy <th>-t
     for (let i of headerList){
         createCell('th', i, tr)
     }
@@ -51,8 +54,9 @@ function generateHeader(table, headerList){
  */
 function renderTableBody(array) {
     const tablebody = document.getElementById('tablebody');
-    tablebody.innerHTML = "";
+    tablebody.innerHTML = ""; //előző tartalom törlése
 
+    //Tömb minden eleméből egy új táblázatsor készül
     for(let a of array) {
         renderTableRow(tablebody, a);
     }
@@ -60,6 +64,7 @@ function renderTableBody(array) {
 
 /**
  * Táblázatsorok létrehozása
+ * Kezeli a rowspanos megjelenítést is
  * 
  * @param {HTMLTableSectionElement} tablebody 
  * @param {CountryWriters} CountryWriters 
@@ -68,6 +73,7 @@ function renderTableRow(tablebody, CountryWriters) {
     const tr2 = document.createElement('tr');
     tablebody.appendChild(tr2);
 
+    //Első cella: nemzetiség - kattintásra kijelől
     const td1 = createCell('td', CountryWriters.nationality, tr2)
     td1.addEventListener("click",function(e){
         /**
@@ -79,6 +85,7 @@ function renderTableRow(tablebody, CountryWriters) {
         const tbody = tr.parentElement;
         const alrmarked = tbody.querySelector('.marked');
 
+        //Egy cella legyen kijelölve egy időben
         if (alrmarked !== null) {
             alrmarked.classList.remove('marked');
         }
@@ -86,9 +93,10 @@ function renderTableRow(tablebody, CountryWriters) {
         valtozo.classList.add("marked");
     });
 
-    const td2 = createCell('td', CountryWriters.author1, tr2);
-    const td3 = createCell('td', CountryWriters.literarypiece1, tr2);
+    const td2 = createCell('td', CountryWriters.author1, tr2); //szerző sor
+    const td3 = createCell('td', CountryWriters.literarypiece1, tr2); //mű sor
 
+    //Ha van második szerző és mű létrehozzuk azokhoz is a sort
     if (CountryWriters.author2 != undefined && CountryWriters.literarypiece2 != undefined) {
         const tr3 = document.createElement('tr');
         tablebody.appendChild(tr3);
@@ -96,14 +104,14 @@ function renderTableRow(tablebody, CountryWriters) {
         const td4 = createCell('td', CountryWriters.author2, tr3);
         const td5 = createCell('td', CountryWriters.literarypiece2, tr3);
 
-        td1.rowSpan = 2;
+        td1.rowSpan = 2; //nemzetiség cella két sor magas legyen
     }
 }
 
 /**
  * Cellák létrehozása
  * 
- * @param {'td'|'th'} cellType - milyen a typeja a cellnek th vagy td
+ * @param {'td'|'th'} cellType - milyen a typeja a cellnek th | td
  * @param {string} cellContent - a cell contentje azaz a változó
  * @param {HTMLTableRowElement} parentRow - a sor amihez hozzáadjuk
  * @returns 
@@ -144,6 +152,7 @@ function createFormElement(forms, id, labelContent) {
     const br3 = document.createElement('br');
     div.appendChild(br3);
     
+    //Hibaüzenetek
     const span = document.createElement('span');
     span.classList.add("error");
     div.appendChild(span);
@@ -160,10 +169,12 @@ function generateForm(id, elements) {
     const form = document.createElement('form');
     form.id = id
 
+    //Input mezők létrehozása
     for (let elem of elements) {
         createFormElement(form, elem.id, elem.label)
     }
 
+    //Hozzáadás gomb
     const button = document.createElement('button');
     button.innerText = 'Hozzáadás';
     form.appendChild(button);
@@ -172,20 +183,21 @@ function generateForm(id, elements) {
 }
 
 /**
+ * Form submit eseménykezelője
  * htmlform FormEventListener-jét kiszervezzük
  * @param {Event} e
  */
 function HTMLFormEventListener(e) {
-    e.preventDefault(); //alapértelmezett működést gátolja
+    e.preventDefault(); //alapértelmezett működést gátolja, az oldal újratöltését megakadályozza
     /**
      * @type {HTMLFormElement}
      */
     const event = e.target;
 
     /** @type {HTMLInputElement} */
-    const nemzetiseg = event.querySelector("#nemzetiseg");
+    const nemzetiseg = event.querySelector("#nemzetiseg"); //szükséges inputok lekérése
     /** @type {string} */
-    const nemzetisegvalue = nemzetiseg.value;
+    const nemzetisegvalue = nemzetiseg.value; //azok értékei (string típus)
 
     /** @type {HTMLInputElement} */
     const szerzo1 = event.querySelector("#szerzo1");
@@ -207,10 +219,12 @@ function HTMLFormEventListener(e) {
     /** @type {string} */
     const mu2value = mu2.value;
 
+    //Validálás, ha rossz kilép
     if(!validateFields(nemzetiseg, szerzo1, mu1)) {
         return;
     }
 
+    //Új objektum a táblázat sorához
     /** 
      * @type {CountryWriters} 
      */
@@ -220,17 +234,19 @@ function HTMLFormEventListener(e) {
     tomb.author1 = szerzo1value;
     tomb.literarypiece1 = mu1value;
 
+    //Opcionális mezők (szerző, mű)
     if (szerzo2value && mu2value) {
         tomb.author2 = szerzo2value;
         tomb.literarypiece2 = mu2value;
     }
 
+    //Új sor beszúrása
     const tbody = document.getElementById("tablebody1");
     renderTableRow(tbody, tomb);
 }
 
 /**
- * Validálás
+ * Validálás (egy mező)
  * 
  * @param {HTMLInputElement} inputField 
  * @param {string} errorMsg 
@@ -242,14 +258,14 @@ function validateField(inputField, errorMsg) {
     if (inputField.value === "") {
         const parentDiv = inputField.parentElement;
         const error = parentDiv.querySelector(".error");
-        error.innerText = errorMsg;
+        error.innerText = errorMsg; //hibaüzenet
         valid = false;
     }
     return valid;
 }
 
 /**
- * Validálás
+ * Validálás (több mező)
  * 
  * @param {HTMLInputElement} inputField1 
  * @param {HTMLInputElement} inputField2 
@@ -257,12 +273,16 @@ function validateField(inputField, errorMsg) {
  */
 function validateFields(inputField1, inputField2, inputField3) {
     const form = inputField1.form;
+
+    //Régi hibák törlése
     const error = form.querySelectorAll('.error');
     for (const i of error) {
         i.innerText = "";
     } //hibaüzenetek törlése
 
     let valid = true;
+
+    //Kötelező mezők validálása
     if (!validateField(inputField1, "Mező kitöltése kötelező!")) {
         valid = false;
     }
