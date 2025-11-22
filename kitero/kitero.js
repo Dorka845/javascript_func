@@ -70,13 +70,14 @@ function makeInvisibleBasedOnid(parentDiv, id){
  * @returns {void}
  */
 function hideBasedOnSelected(dropdownList){
-    const ertek = dropdownList.value;
-    const cardelement = dropdownList.parentElement.querySelectorAll(".card");
+    const ertek = dropdownList.value; //kiválasztott érték
+    const cardelement = dropdownList.parentElement.querySelectorAll(".card"); //összes .card elemet lekérjük amit elkell rejteni
 
+    //Minden kártyát elrejtunk
     for (const elem of cardelement) {
         elem.classList.add("hide")
     }
-    makeVisibleBasedOnId(dropdownList.parentElement, ertek);
+    makeVisibleBasedOnId(dropdownList.parentElement, ertek); //kiválasztottat megjelenítjuk
 }
 
 
@@ -92,10 +93,12 @@ function hideBasedOnSelected(dropdownList){
 function hideBasedOnCheckbox(checkbox){
     const a = checkbox.parentElement;
     if (checkbox.checked) {
+        //Férfi kártya megjelen.
         makeVisibleBasedOnId(a, "ferfi");
         makeInvisibleBasedOnid(a, "no");
     }
     else {
+        //Női kártya megjelen.
         makeVisibleBasedOnId(a, "no");
         makeInvisibleBasedOnid(a, "ferfi");
     }
