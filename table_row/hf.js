@@ -73,7 +73,7 @@ const formElements = {
 
 //Táblázat létrehozása
 generateTable(formElements.header, "tablebody"); //táblázat létrehozása a megadott fejlécekkel
-renderTableBody(arr); //táblázat feltöltése
+renderTableBody(arr); //táblázat feltöltése, kirendeli az adatokat a táblázatba
 
 //HTML-ben lévő form eseménykezelője
 const formHTML = document.getElementById("htmlform"); //HTML-ben lévő form megkeresése
@@ -90,7 +90,7 @@ formJS.addEventListener("submit", function(e){
     /**
      * @type {HTMLFormElement}
      */
-    const event = e.target;
+    const event = e.target; //maga a form ahol az inputok vannak
 
     /** @type {HTMLInputElement} */
     const nemzetiseg = event.querySelector("#nemzetiseg"); //szükséges inputok lekérése

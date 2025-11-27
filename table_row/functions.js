@@ -54,7 +54,7 @@ function generateHeader(table, headerList){
  */
 function renderTableBody(array) {
     const tablebody = document.getElementById('tablebody');
-    tablebody.innerHTML = ""; //előző tartalom törlése
+    tablebody.innerHTML = ""; //előző tartalom törlése, igy nem duplazodik
 
     //Tömb minden eleméből egy új táblázatsor készül
     for(let a of array) {
@@ -93,16 +93,16 @@ function renderTableRow(tablebody, CountryWriters) {
         valtozo.classList.add("marked");
     });
 
-    const td2 = createCell('td', CountryWriters.author1, tr2); //szerző sor
-    const td3 = createCell('td', CountryWriters.literarypiece1, tr2); //mű sor
+    createCell('td', CountryWriters.author1, tr2); //szerző sor, td2
+    createCell('td', CountryWriters.literarypiece1, tr2); //mű sor, td3
 
     //Ha van második szerző és mű létrehozzuk azokhoz is a sort
     if (CountryWriters.author2 != undefined && CountryWriters.literarypiece2 != undefined) {
         const tr3 = document.createElement('tr');
         tablebody.appendChild(tr3);
 
-        const td4 = createCell('td', CountryWriters.author2, tr3);
-        const td5 = createCell('td', CountryWriters.literarypiece2, tr3);
+        createCell('td', CountryWriters.author2, tr3); //második szerző sor, td4
+        createCell('td', CountryWriters.literarypiece2, tr3); //második mű sor, td5
 
         td1.rowSpan = 2; //nemzetiség cella két sor magas legyen
     }
